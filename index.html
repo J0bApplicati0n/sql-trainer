@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <title>SQL Fraud Trainer</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">OFFLINE SQL PRACTICE</div>
+      <h1>SQL Fraud Trainer</h1>
+    </div>
+    <button id="settingsBtn" class="icon-btn" aria-label="Настройки">⚙</button>
+  </header>
+
+  <main class="app">
+    <section class="card status-card">
+      <div>
+        <div class="muted">Текущий пул</div>
+        <div id="poolSummary" class="strong">Загрузка…</div>
+      </div>
+      <div class="stats">
+        <span>✅ <b id="okCount">0</b></span>
+        <span>❌ <b id="badCount">0</b></span>
+      </div>
+    </section>
+
+    <section class="card task-card">
+      <div class="task-meta">
+        <span id="levelBadge" class="badge">Level —</span>
+        <span id="difficultyBadge" class="badge secondary">★</span>
+      </div>
+      <h2 id="taskTitle">Загружаю задание…</h2>
+      <p id="taskPrompt"></p>
+      <div id="topicChips" class="chips"></div>
+      <div class="task-actions">
+        <button id="newTaskBtn" class="btn primary">🎲 Случайное задание</button>
+        <button id="hintBtn" class="btn">💡 Подсказка</button>
+      </div>
+      <div id="hintBox" class="notice hidden"></div>
+    </section>
+
+    <section class="card">
+      <label for="sqlInput" class="label">Твой SQL</label>
+      <textarea id="sqlInput" spellcheck="false" autocomplete="off" autocapitalize="off"
+        placeholder="SELECT ..."></textarea>
+      <div class="editor-actions">
+        <button id="checkBtn" class="btn success">▶ Проверить</button>
+        <button id="clearBtn" class="btn">Очистить</button>
+      </div>
+    </section>
+
+    <section id="resultCard" class="card hidden">
+      <h3 id="resultTitle"></h3>
+      <p id="resultMessage"></p>
+      <div id="queryError" class="error hidden"></div>
+      <div id="resultTableWrap" class="table-wrap hidden"></div>
+      <button id="solutionBtn" class="btn danger-outline hidden">Показать правильный запрос</button>
+      <pre id="solutionBox" class="solution hidden"></pre>
+    </section>
+
+    <section class="card compact">
+      <details>
+        <summary>Схема учебной БД</summary>
+        <pre class="schema">clients(
+  client_id, client_name,
+  country, risk_level
+)
+
+transactions(
+  transaction_id, client_id,
+  amount, status, device_id,
+  transaction_date
+)</pre>
+      </details>
+    </section>
+  </main>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" class="settings">
+      <div class="dialog-head">
+        <div>
+          <div class="eyebrow">ФИЛЬТР ПУЛА</div>
+          <h2>Настройки заданий</h2>
+        </div>
+        <button value="cancel" class="icon-btn">✕</button>
+      </div>
+
+      <label class="label" for="maxLevel">Максимальный уровень: <b id="maxLevelValue">7</b></label>
+      <input id="maxLevel" type="range" min="1" max="10" value="7" />
+
+      <div class="label top-gap">Разрешённые темы</div>
+      <div id="topicSettings" class="topic-settings"></div>
+
+      <div class="dialog-actions">
+        <button id="resetStatsBtn" type="button" class="btn danger-outline">Сбросить статистику</button>
+        <button id="saveSettingsBtn" value="default" class="btn primary">Сохранить</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

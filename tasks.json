@@ -1,0 +1,413 @@
+[
+  {
+    "id": "l1_01",
+    "level": 1,
+    "difficulty": 1,
+    "topics": [
+      "select"
+    ],
+    "title": "Все клиенты",
+    "prompt": "Выведи все строки из таблицы clients.",
+    "hint": "Нужен SELECT всех столбцов из одной таблицы.",
+    "solution": "SELECT * FROM clients;",
+    "orderMatters": false
+  },
+  {
+    "id": "l1_02",
+    "level": 1,
+    "difficulty": 1,
+    "topics": [
+      "select"
+    ],
+    "title": "Имена клиентов",
+    "prompt": "Выведи только client_name из таблицы clients.",
+    "hint": "В SELECT можно перечислять только нужные столбцы.",
+    "solution": "SELECT client_name FROM clients;",
+    "orderMatters": false
+  },
+  {
+    "id": "l1_03",
+    "level": 1,
+    "difficulty": 1,
+    "topics": [
+      "where"
+    ],
+    "title": "Declined-транзакции",
+    "prompt": "Выведи все транзакции со status = 'declined'.",
+    "hint": "Фильтрация строк делается через WHERE.",
+    "solution": "SELECT * FROM transactions WHERE status = 'declined';",
+    "orderMatters": false
+  },
+  {
+    "id": "l1_04",
+    "level": 1,
+    "difficulty": 1,
+    "topics": [
+      "where"
+    ],
+    "title": "Крупные операции",
+    "prompt": "Выведи transaction_id и amount для транзакций с amount > 50000.",
+    "hint": "Условие по числовому столбцу пишется в WHERE.",
+    "solution": "SELECT transaction_id, amount FROM transactions WHERE amount > 50000;",
+    "orderMatters": false
+  },
+  {
+    "id": "l1_05",
+    "level": 1,
+    "difficulty": 1,
+    "topics": [
+      "where"
+    ],
+    "title": "Пустой device_id",
+    "prompt": "Выведи transaction_id всех транзакций, где device_id отсутствует.",
+    "hint": "NULL проверяется через IS NULL.",
+    "solution": "SELECT transaction_id FROM transactions WHERE device_id IS NULL;",
+    "orderMatters": false
+  },
+  {
+    "id": "l2_01",
+    "level": 2,
+    "difficulty": 1,
+    "topics": [
+      "order_by"
+    ],
+    "title": "Суммы по убыванию",
+    "prompt": "Выведи transaction_id и amount всех транзакций, отсортировав amount от большей к меньшей.",
+    "hint": "Используй ORDER BY ... DESC.",
+    "solution": "SELECT transaction_id, amount FROM transactions ORDER BY amount DESC;",
+    "orderMatters": true
+  },
+  {
+    "id": "l2_02",
+    "level": 2,
+    "difficulty": 1,
+    "topics": [
+      "distinct"
+    ],
+    "title": "Уникальные страны",
+    "prompt": "Выведи список уникальных country из clients.",
+    "hint": "Перед столбцом можно использовать DISTINCT.",
+    "solution": "SELECT DISTINCT country FROM clients;",
+    "orderMatters": false
+  },
+  {
+    "id": "l2_03",
+    "level": 2,
+    "difficulty": 2,
+    "topics": [
+      "where"
+    ],
+    "title": "Средний диапазон",
+    "prompt": "Выведи transaction_id и amount для транзакций с amount от 2000 до 50000 включительно.",
+    "hint": "Подойдет BETWEEN ... AND ...",
+    "solution": "SELECT transaction_id, amount FROM transactions WHERE amount BETWEEN 2000 AND 50000;",
+    "orderMatters": false
+  },
+  {
+    "id": "l2_04",
+    "level": 2,
+    "difficulty": 2,
+    "topics": [
+      "where"
+    ],
+    "title": "Две страны",
+    "prompt": "Выведи client_id и client_name клиентов из Russia или USA.",
+    "hint": "Можно использовать IN (...).",
+    "solution": "SELECT client_id, client_name FROM clients WHERE country IN ('Russia','USA');",
+    "orderMatters": false
+  },
+  {
+    "id": "l3_01",
+    "level": 3,
+    "difficulty": 1,
+    "topics": [
+      "aggregate"
+    ],
+    "title": "Средняя сумма",
+    "prompt": "Найди средний amount по всем транзакциям.",
+    "hint": "Используй AVG(amount).",
+    "solution": "SELECT AVG(amount) FROM transactions;",
+    "orderMatters": false
+  },
+  {
+    "id": "l3_02",
+    "level": 3,
+    "difficulty": 1,
+    "topics": [
+      "aggregate",
+      "group_by"
+    ],
+    "title": "Количество по статусам",
+    "prompt": "Для каждого status посчитай количество транзакций.",
+    "hint": "COUNT(*) + GROUP BY status.",
+    "solution": "SELECT status, COUNT(*) FROM transactions GROUP BY status;",
+    "orderMatters": false
+  },
+  {
+    "id": "l3_03",
+    "level": 3,
+    "difficulty": 2,
+    "topics": [
+      "aggregate",
+      "group_by"
+    ],
+    "title": "Сумма по клиенту",
+    "prompt": "Для каждого client_id посчитай общую сумму amount.",
+    "hint": "SUM(amount) + GROUP BY client_id.",
+    "solution": "SELECT client_id, SUM(amount) FROM transactions GROUP BY client_id;",
+    "orderMatters": false
+  },
+  {
+    "id": "l3_04",
+    "level": 3,
+    "difficulty": 2,
+    "topics": [
+      "aggregate",
+      "group_by",
+      "having"
+    ],
+    "title": "Клиенты свыше 100k",
+    "prompt": "Выведи client_id и сумму его транзакций только для клиентов, у которых общая сумма > 100000.",
+    "hint": "После GROUP BY фильтр по агрегату делается через HAVING.",
+    "solution": "SELECT client_id, SUM(amount) FROM transactions GROUP BY client_id HAVING SUM(amount) > 100000;",
+    "orderMatters": false
+  },
+  {
+    "id": "l4_01",
+    "level": 4,
+    "difficulty": 2,
+    "topics": [
+      "join"
+    ],
+    "title": "Транзакции с именами",
+    "prompt": "Выведи transaction_id, client_name и amount для транзакций, у которых есть совпадающий клиент в clients.",
+    "hint": "Соедини transactions с clients по client_id.",
+    "solution": "SELECT t.transaction_id, c.client_name, t.amount\nFROM transactions t\nJOIN clients c ON t.client_id = c.client_id;",
+    "orderMatters": false
+  },
+  {
+    "id": "l4_02",
+    "level": 4,
+    "difficulty": 2,
+    "topics": [
+      "join"
+    ],
+    "title": "Все клиенты и их транзакции",
+    "prompt": "Выведи client_name и transaction_id, сохранив в результате всех клиентов, даже если у них нет транзакций.",
+    "hint": "Таблица, которую нужно сохранить целиком, должна быть слева в LEFT JOIN.",
+    "solution": "SELECT c.client_name, t.transaction_id\nFROM clients c\nLEFT JOIN transactions t ON c.client_id = t.client_id;",
+    "orderMatters": false
+  },
+  {
+    "id": "l4_03",
+    "level": 4,
+    "difficulty": 3,
+    "topics": [
+      "join",
+      "where"
+    ],
+    "title": "Клиенты без транзакций",
+    "prompt": "Выведи client_id и client_name клиентов, у которых нет ни одной транзакции.",
+    "hint": "LEFT JOIN + проверка NULL со стороны transactions.",
+    "solution": "SELECT c.client_id, c.client_name\nFROM clients c\nLEFT JOIN transactions t ON c.client_id = t.client_id\nWHERE t.transaction_id IS NULL;",
+    "orderMatters": false
+  },
+  {
+    "id": "l4_04",
+    "level": 4,
+    "difficulty": 3,
+    "topics": [
+      "join",
+      "where"
+    ],
+    "title": "High risk declined",
+    "prompt": "Выведи transaction_id, client_name и amount только для declined-транзакций клиентов с risk_level = 'high'.",
+    "hint": "JOIN, затем два условия в WHERE.",
+    "solution": "SELECT t.transaction_id, c.client_name, t.amount\nFROM transactions t\nJOIN clients c ON t.client_id = c.client_id\nWHERE t.status = 'declined' AND c.risk_level = 'high';",
+    "orderMatters": false
+  },
+  {
+    "id": "l5_01",
+    "level": 5,
+    "difficulty": 2,
+    "topics": [
+      "case"
+    ],
+    "title": "Размер транзакции",
+    "prompt": "Выведи transaction_id, amount и вычисляемый столбец size_group: 'large' если amount >= 50000, иначе 'small'.",
+    "hint": "Используй CASE WHEN ... THEN ... ELSE ... END.",
+    "solution": "SELECT transaction_id, amount,\nCASE WHEN amount >= 50000 THEN 'large' ELSE 'small' END AS size_group\nFROM transactions;",
+    "orderMatters": false
+  },
+  {
+    "id": "l5_02",
+    "level": 5,
+    "difficulty": 2,
+    "topics": [
+      "date"
+    ],
+    "title": "Транзакции после 5 октября",
+    "prompt": "Выведи transaction_id и transaction_date для транзакций после '2026-10-05'.",
+    "hint": "Даты в этой БД хранятся как ISO-строки YYYY-MM-DD, поэтому их можно сравнить напрямую.",
+    "solution": "SELECT transaction_id, transaction_date FROM transactions WHERE transaction_date > '2026-10-05';",
+    "orderMatters": false
+  },
+  {
+    "id": "l5_03",
+    "level": 5,
+    "difficulty": 3,
+    "topics": [
+      "case",
+      "aggregate"
+    ],
+    "title": "Сколько declined",
+    "prompt": "Одним запросом верни количество всех транзакций и количество declined-транзакций.",
+    "hint": "Для declined можно суммировать CASE, возвращающий 1 или 0.",
+    "solution": "SELECT COUNT(*),\nSUM(CASE WHEN status = 'declined' THEN 1 ELSE 0 END)\nFROM transactions;",
+    "orderMatters": false
+  },
+  {
+    "id": "l6_01",
+    "level": 6,
+    "difficulty": 2,
+    "topics": [
+      "subquery",
+      "aggregate"
+    ],
+    "title": "Выше среднего",
+    "prompt": "Выведи все транзакции, у которых amount выше среднего amount по всей таблице.",
+    "hint": "Сравни amount с результатом подзапроса SELECT AVG(amount).",
+    "solution": "SELECT * FROM transactions\nWHERE amount > (SELECT AVG(amount) FROM transactions);",
+    "orderMatters": false
+  },
+  {
+    "id": "l6_02",
+    "level": 6,
+    "difficulty": 3,
+    "topics": [
+      "subquery"
+    ],
+    "title": "Клиенты с declined",
+    "prompt": "Выведи client_id и client_name клиентов, у которых есть хотя бы одна declined-транзакция.",
+    "hint": "Можно отфильтровать client_id через IN с подзапросом.",
+    "solution": "SELECT client_id, client_name\nFROM clients\nWHERE client_id IN (\n  SELECT client_id FROM transactions WHERE status = 'declined'\n);",
+    "orderMatters": false
+  },
+  {
+    "id": "l6_03",
+    "level": 6,
+    "difficulty": 3,
+    "topics": [
+      "subquery",
+      "aggregate"
+    ],
+    "title": "Максимальная транзакция",
+    "prompt": "Выведи всю строку транзакции с максимальным amount.",
+    "hint": "Сравни amount с SELECT MAX(amount).",
+    "solution": "SELECT * FROM transactions\nWHERE amount = (SELECT MAX(amount) FROM transactions);",
+    "orderMatters": false
+  },
+  {
+    "id": "l7_01",
+    "level": 7,
+    "difficulty": 3,
+    "topics": [
+      "cte",
+      "aggregate",
+      "group_by"
+    ],
+    "title": "CTE: сумма по клиенту",
+    "prompt": "Через CTE client_totals посчитай сумму транзакций по client_id и выведи только тех, у кого сумма > 100000.",
+    "hint": "Сначала WITH client_totals AS (... GROUP BY client_id), затем SELECT из CTE.",
+    "solution": "WITH client_totals AS (\n  SELECT client_id, SUM(amount) AS client_sum\n  FROM transactions\n  GROUP BY client_id\n)\nSELECT client_id, client_sum\nFROM client_totals\nWHERE client_sum > 100000;",
+    "orderMatters": false
+  },
+  {
+    "id": "l7_02",
+    "level": 7,
+    "difficulty": 4,
+    "topics": [
+      "cte",
+      "aggregate",
+      "group_by",
+      "subquery"
+    ],
+    "title": "Выше среднего клиентского оборота",
+    "prompt": "Через CTE посчитай сумму amount по каждому client_id. Затем выведи client_id и сумму только для клиентов, чья сумма выше среднего значения клиентских сумм.",
+    "hint": "Внешний WHERE может сравнивать client_sum с подзапросом AVG(client_sum) из CTE.",
+    "solution": "WITH client_totals AS (\n  SELECT client_id, SUM(amount) AS client_sum\n  FROM transactions\n  GROUP BY client_id\n)\nSELECT client_id, client_sum\nFROM client_totals\nWHERE client_sum > (SELECT AVG(client_sum) FROM client_totals);",
+    "orderMatters": false
+  },
+  {
+    "id": "l7_03",
+    "level": 7,
+    "difficulty": 4,
+    "topics": [
+      "cte",
+      "aggregate",
+      "group_by",
+      "case"
+    ],
+    "title": "Declined по клиентам",
+    "prompt": "Через CTE для каждого client_id посчитай общее число транзакций и число declined. Выведи только клиентов, у которых declined_count > 1.",
+    "hint": "В CTE используй COUNT(*) и SUM(CASE WHEN ...).",
+    "solution": "WITH stats AS (\n  SELECT client_id,\n         COUNT(*) AS total_count,\n         SUM(CASE WHEN status='declined' THEN 1 ELSE 0 END) AS declined_count\n  FROM transactions\n  GROUP BY client_id\n)\nSELECT client_id, total_count, declined_count\nFROM stats\nWHERE declined_count > 1;",
+    "orderMatters": false
+  },
+  {
+    "id": "l7_04",
+    "level": 7,
+    "difficulty": 4,
+    "topics": [
+      "join",
+      "cte",
+      "aggregate",
+      "group_by"
+    ],
+    "title": "Имена + сумма через CTE",
+    "prompt": "Через CTE посчитай сумму транзакций по client_id, затем присоедини clients и выведи client_name и client_sum для существующих клиентов.",
+    "hint": "CTE агрегирует transactions, внешний запрос JOIN-ит результат с clients.",
+    "solution": "WITH totals AS (\n  SELECT client_id, SUM(amount) AS client_sum\n  FROM transactions\n  GROUP BY client_id\n)\nSELECT c.client_name, totals.client_sum\nFROM totals\nJOIN clients c ON c.client_id = totals.client_id;",
+    "orderMatters": false
+  },
+  {
+    "id": "l8_01",
+    "level": 8,
+    "difficulty": 3,
+    "topics": [
+      "window"
+    ],
+    "title": "Будущее: ROW_NUMBER",
+    "prompt": "Для каждой транзакции выведи transaction_id, client_id, amount и номер транзакции клиента по возрастанию transaction_date.",
+    "hint": "Это задача на ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...).",
+    "solution": "SELECT transaction_id, client_id, amount,\nROW_NUMBER() OVER (\n  PARTITION BY client_id ORDER BY transaction_date\n) AS rn\nFROM transactions;",
+    "orderMatters": false
+  },
+  {
+    "id": "l8_02",
+    "level": 8,
+    "difficulty": 3,
+    "topics": [
+      "window"
+    ],
+    "title": "Будущее: сумма клиента рядом",
+    "prompt": "Для каждой транзакции выведи transaction_id, client_id, amount и общую сумму amount этого клиента, не сворачивая строки.",
+    "hint": "SUM(amount) можно использовать как оконную функцию с OVER(PARTITION BY client_id).",
+    "solution": "SELECT transaction_id, client_id, amount,\nSUM(amount) OVER (PARTITION BY client_id) AS client_total\nFROM transactions;",
+    "orderMatters": false
+  },
+  {
+    "id": "l9_01",
+    "level": 9,
+    "difficulty": 4,
+    "topics": [
+      "window",
+      "lag"
+    ],
+    "title": "Будущее: предыдущая транзакция",
+    "prompt": "Выведи transaction_id, client_id, amount и amount предыдущей транзакции этого клиента по дате.",
+    "hint": "Позже здесь пригодится LAG(amount) OVER (...).",
+    "solution": "SELECT transaction_id, client_id, amount,\nLAG(amount) OVER (\n  PARTITION BY client_id ORDER BY transaction_date\n) AS prev_amount\nFROM transactions;",
+    "orderMatters": false
+  }
+]
